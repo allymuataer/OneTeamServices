@@ -10,8 +10,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+
 
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -20,8 +19,6 @@ public class Driver {
 
 	 private static WebDriver driver;
 	  
-	  
-	 
 
 	    public static WebDriver getDriver() {
 	        if (driver == null) {
@@ -65,7 +62,7 @@ public class Driver {
 	                break;
 	            }
 
-	            driver.get(configurationReader.getProperties("BookStore"));
+	            driver.get(configurationReader.getProperties("oneTeamServicesHome"));
 	            driver.manage().window().maximize();
 	            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	            pageInitializer.initialize();

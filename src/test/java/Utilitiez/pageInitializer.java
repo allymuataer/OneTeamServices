@@ -1,16 +1,18 @@
 package Utilitiez;
 
-import Pages.bookStorePage;
-import Pages.loginPage;
+import Pages.homePage;
+import Pages.ourServicesPage;
 
 public class pageInitializer extends Driver {
 
-	public static bookStorePage bsp;
+	public static homePage hp;
+	public static ourServicesPage osp;
 
 public static void initialize() {
 	
 
-	bsp = new bookStorePage();
+	hp = new homePage();
+	osp = new ourServicesPage();
 	
 }
 }

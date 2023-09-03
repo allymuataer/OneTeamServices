@@ -1,52 +1,37 @@
 package stepDefinition;
 
-import org.junit.Assert;
+import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import Utilitiez.Driver;
 import Utilitiez.commonMethods;
-import Utilitiez.configurationReader;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class BookStore extends commonMethods {
+public class OurServices extends commonMethods {
 
-	@When("User searches for a book by title or author")
-	public void user_searches_for_a_book_by_title_or_author() {
-		bsp.searchBox.sendKeys(configurationReader.getProperties("BookTitle"));
-	}
-
-	@Then("Relevant books should be displayed in the search results")
-	public void relevant_books_should_be_displayed_in_the_search_results() {
-
-		Assert.assertEquals(configurationReader.getProperties("BookTitle"), bsp.bookTitleText.getText());
-	}
-
-	@When("User selects a book from the list")
-	public void user_selects_a_book_from_the_list() {
-		bsp.bookButton.click();
-	}
-
-	@Then("Book details page should be displayed")
-	public void book_details_page_should_be_displayed() {
-		Assert.assertTrue(bsp.bookDescrip.isDisplayed());
-	}
-
-	@When("User adds the book to the collection")
-	public void user_adds_the_book_to_the_collection() {
-		waitForClickability(bsp.loginButton);
-		bsp.loginButton.click();
-		waitForVisibility(bsp.userNameField);
-		bsp.userNameField.sendKeys(configurationReader.getProperties("Username"));
-		bsp.passwordField.sendKeys(configurationReader.getProperties("Password"));
-		bsp.loginButton.click();
-		scrollDown(bsp.addCollectionButton);
-		bsp.addCollectionButton.click();
+	@When("I click on the Our Services button on the Top header")
+	public void i_click_on_the_button_on_the_top_header() {
+		hp.ourServicesLink.click();
 
 	}
 
-	@Then("Book should be added to the collection successfully")
-	public void book_should_be_added_to_the_collection_successfully() {
-		Assert.assertEquals(configurationReader.getProperties("AlertBoxText"), getTextAlert());
-	}
+	@Then("I should see the following services being offered:")
+	public void iShouldSeeTheFollowingServicesBeingOffered(List<String> expectedServices) {	
+		    // Get the text content of the list of services
+		    List<WebElement> serviceElements = Driver.getDriver().findElements(By.xpath(("//span[@style=\"font-size:20px;\"]")));
 
-	
+		    // Check if all expected services are present on the page
+		    for (int i = 0; i < expectedServices.size(); i++) {
+		        String expectedService = expectedServices.get(i);
+		        WebElement actualServiceText = serviceElements.get(i);
+		    	System.out.println(expectedService+"|"+actualServiceText.getText());
+		        // Check if the text of the actual service element matches the expected service
+		        Assert.assertTrue(actualServiceText.getText().contains(expectedService), 
+		        		"Service '" + expectedService + "' is not found.");
+		    }
+		}
 }
